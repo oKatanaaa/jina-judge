@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools >= 68.2.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jina_judge"
+dynamic = ["version"]
+dependencies = []
+requires-python = ">=3.10"
+authors = [
+  {name = "Igor Kilbas", email = "whitemarsstudios@gmail.com"}
+]
+maintainers = [
+  {name = "Igor Kilbas", email = "whitemarsstudios@gmail.com"}
+]
+description = "A small framework for curriculum training of LLMs"
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = [
+  "large language model",
+  "reward modelling", 
+  "llm evaluation", 
+  "bert", 
+  "jina"
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: LLM Development",
+  "Programming Language :: Python"
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "jina_judge.__version__"}
+
+[project.urls]
+Homepage = "https://github.com/oKatanaaa/jina-judge"
+Repository = "https://github.com/oKatanaaa/jina-judge"
+"Bug Tracker" = "https://github.com/oKatanaaa/jina-judge/issues"
+
+[project.scripts]
+jinaj-train = "jina_judge.main:run"
