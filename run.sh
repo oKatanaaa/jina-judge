@@ -1,1 +1,0 @@
-PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True nohup python main.py config2-continue.yaml > judge-v2-2-1.log 2>&1 &

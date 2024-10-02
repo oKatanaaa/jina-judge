@@ -2,7 +2,7 @@ import torch
 import os
 from tqdm import tqdm
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-from config import TrainConfig
+from .config import TrainConfig
 
 
 def train_one_epoch(model, dataloader, optimizer, loss_fn, config: TrainConfig):
@@ -12,7 +12,7 @@ def train_one_epoch(model, dataloader, optimizer, loss_fn, config: TrainConfig):
     total_batches = 0  # Initialize a counter for batches
     accumulation_steps = config.gradient_accumulation_steps
     # Create a tqdm progress bar with a dynamic total
-    pbar = tqdm(desc="Training", unit="batch")
+    pbar = tqdm(desc="Training")
 
     # Iterate over batches
     for i, batch in enumerate(dataloader):
@@ -21,9 +21,8 @@ def train_one_epoch(model, dataloader, optimizer, loss_fn, config: TrainConfig):
         # Move data to the device
         inputs = batch['prompt']
         labels = batch['score'].to(device)
-
+        
         # Forward pass
-        optimizer.zero_grad()
         outputs = model(inputs)  # Model expects a list of strings, outputs logits
         loss = loss_fn(outputs, labels)
 
@@ -42,12 +41,12 @@ def train_one_epoch(model, dataloader, optimizer, loss_fn, config: TrainConfig):
             optimizer.zero_grad()  # Reset gradients after updating
             
             # Update progress bar with the loss
-            pbar.set_postfix(loss=loss.item() * accumulation_steps) # show actual loss
-            pbar.update(accumulation_steps)
+            pbar.set_postfix(batch=total_batches, loss=loss.item() * accumulation_steps) # show actual loss
+
+            if config.experiment is not None:
+                config.experiment.log_metric("batch_loss", loss.item() * accumulation_steps, step=total_batches)
 
         running_loss += loss.item() * accumulation_steps
-
-        
 
     # Check if there are remaining gradients to update
     if total_batches % accumulation_steps != 0:
@@ -103,6 +102,13 @@ def train_model(model, dataloader, test_dataloader, optimizer, loss_fn, config: 
         # Evaluate the model
         accuracy, precision, recall, f1 = evaluate_model(model, test_dataloader, device)
         print(f"Validation Metrics - Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1-Score: {f1:.4f}\n")
+
+        if config.experiment is not None:
+            config.experiment.log_metric("val_accuracy", accuracy, step=epoch)
+            config.experiment.log_metric("val_precision", precision, step=epoch)
+            config.experiment.log_metric("val_recall", recall, step=epoch)
+            config.experiment.log_metric("val_f1", f1, step=epoch)
+            config.experiment.log_metric("train_loss", epoch_loss, step=epoch)
 
         if f1 > best_f1:
             best_f1 = f1

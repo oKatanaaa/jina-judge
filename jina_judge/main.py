@@ -3,7 +3,7 @@ import argparse
 import os
 
 from .train_utils import train_model, evaluate_model
-from .model import JudgeModel, JudgeModelV2
+from .model import JudgeModelV2
 from .dataloader import make_dataloader, load_dataset
 from .config import TrainConfig, load_config, save_config
 
@@ -32,9 +32,11 @@ def make_dataloaders(config: TrainConfig, tokenizer):
 
 
 def main(config: TrainConfig):
-    model = JudgeModelV2(n_classes=3)
-    for p in model.parameters():
-        p.requires_grad = True
+    model = JudgeModelV2(n_classes=3, dropout_prob=config.dropout)
+
+    if config.all_params:
+        for p in model.parameters():
+            p.requires_grad = True
 
     n_params = count_trainable_params(model) / 1e6
     print(f"Number of trainable parameters (millions): {n_params:.4f}")

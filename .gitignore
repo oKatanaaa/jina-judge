@@ -1,5 +1,5 @@
 # Folder with model weights
-config*
+config*.yaml
 jina*.pth
 judge*.log
 # Logging when running in background
