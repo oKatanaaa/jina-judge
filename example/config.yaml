@@ -1,0 +1,20 @@
+output_dir: "output"
+checkpoint: # used for continued training, specify path to .pth
+train_dataset:
+- "dataset"
+val_dataset:
+- "dataset"
+test_dataset:
+- "dataset" # it's required, so you may specify val dataset here if you don't have test
+epochs: 5
+weight_decay: 0.0001
+micro_batch_size: 4
+gradient_accumulation_steps: 4
+max_grad_norm: 0.5
+learning_rate: 0.00001
+max_ctx_len: 4096
+dropout: 0.1
+device: "cuda:0"
+comet_api_key: # optional
+comet_project_name: # optional
+comet_workspace: # optional
