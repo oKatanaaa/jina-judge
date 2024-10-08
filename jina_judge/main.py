@@ -21,6 +21,9 @@ def _load_dataset(dataset_paths):
 
 
 def make_dataloaders(config: TrainConfig, tokenizer):
+    assert config.train_dataset is not None, "train_dataset must be specified"
+    assert config.val_dataset is not None, "val_dataset must be specified"
+    assert config.test_dataset is not None, "test_dataset must be specified"
     train_set = _load_dataset(config.train_dataset)
     val_set = _load_dataset(config.val_dataset)
     test_set = _load_dataset(config.test_dataset)
@@ -32,7 +35,7 @@ def make_dataloaders(config: TrainConfig, tokenizer):
 
 
 def main(config: TrainConfig):
-    model = JudgeModelV2(n_classes=3, dropout_prob=config.dropout)
+    model = JudgeModelV2(n_classes=3, dropout_prob=config.dropout, num_decoder_layers=config.n_blocks)
 
     if config.all_params:
         for p in model.parameters():

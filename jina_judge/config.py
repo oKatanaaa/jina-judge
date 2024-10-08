@@ -20,8 +20,8 @@ class TrainConfig:
     learning_rate: float = 1e-5
     dropout: float = 0.1
     weight_decay: float = 1e-4
+    n_blocks: int = 5
     all_params: bool = True
-    warmup_steps: int = 0
     max_ctx_len: int = 4096
     device: str = "cuda:0"
     comet_api_key: Union[str, None] = None

@@ -44,7 +44,7 @@ def train_one_epoch(model, dataloader, optimizer, loss_fn, config: TrainConfig):
             pbar.set_postfix(batch=total_batches, loss=loss.item() * accumulation_steps) # show actual loss
 
             if config.experiment is not None:
-                config.experiment.log_metric("batch_loss", loss.item() * accumulation_steps, step=total_batches)
+                config.experiment.log_metric("batch_loss", loss.item() * accumulation_steps)
 
         running_loss += loss.item() * accumulation_steps
 
