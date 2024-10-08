@@ -1,7 +1,3 @@
-Here’s the revised README:
-
----
-
 # JinaJudge Training Code
 
 This repository contains the code used to train **JinaJudge**, a model designed to replicate GPT-4-1106-Preview judgments in the Russian LLM Arena for more cost-effective model evaluations.
