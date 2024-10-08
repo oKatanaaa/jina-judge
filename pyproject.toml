@@ -10,7 +10,8 @@ dependencies = [
   "comet_ml ~= 3.47.0",
   "transformers ~= 4.45.1",
   "scikit-learn ~= 1.4.0",
-  "tqdm ~= 4.65.0"
+  "tqdm ~= 4.65.0",
+  "flash_attn ~= 2.6.3"
 ]
 requires-python = ">=3.10"
 authors = [
