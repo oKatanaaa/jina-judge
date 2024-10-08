@@ -1,6 +1,6 @@
 # JinaJudge Training Code
 
-This repository contains the code used to train **JinaJudge**, a model designed to replicate GPT-4-1106-Preview judgments in the Russian LLM Arena for more cost-effective model evaluations.
+This repository contains the code used to train [**JinaJudge**](https://huggingface.co/kaleinaNyan/jina-v3-rullmarena-judge), a model designed to replicate GPT-4-1106-Preview judgments in the Russian LLM Arena for more cost-effective model evaluations.
 
 Human judgments are expensive and time-consuming, and while GPT-4 can act as a proxy, it remains costly. **JinaJudge** reduces costs by replicating these judgment patterns in a lightweight, scalable model.
 
